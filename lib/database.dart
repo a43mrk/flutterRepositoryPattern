@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'api.dart';
 import 'repository.dart';
 
@@ -24,6 +26,9 @@ class TakeByCriteria implements Method<UserModel,List<User>> {
 
   @override
   Future<List<User>> apply(Executable s) {
+    // debugger();
+    // var t = s as Take<List<User>>;
+    // return t.takeByCriteria(this);
     if(s is UserModel){
       return s.takeByCriteria(this);
     } else if( s is UserApi){
@@ -110,9 +115,9 @@ class UserModel implements ICache<UserModel, User> {
   Future<List<User>> takeByCriteria(TakeByCriteria state) async {
     // if(state is TakeByCriteria){
     //   print("got list..");
-      // return [User(name: "Don", personId: state.id)];
+      return [User(name: "Don", personId: state.id)];
     // } else {
-      return Future.error("no data");
+      // return Future.error("no data");
     // }
   }
 

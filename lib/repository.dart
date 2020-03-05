@@ -315,9 +315,9 @@ abstract class Executable {
   Future<T> exec<T>(Method s);
 }
 
-// abstract class Take<S,T> implements Method<S,T>{
-//   Future<T> takeByCriteria(S s, Map<String,dynamic> options);
-// }
+abstract class Take<T> implements Executable{
+  Future<T> takeByCriteria(Method s);
+}
 
 
 abstract class IModel{
@@ -330,6 +330,8 @@ abstract class IModel{
   setSynced();
 }
 
+
+// TODO: try to manage an list of callbacks? (){} with specific signatures?
 abstract class ICache<S,T> implements Executable {
   // final Set<Method> actions;
 
