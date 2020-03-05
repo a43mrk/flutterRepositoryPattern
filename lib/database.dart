@@ -1,4 +1,5 @@
 
+import 'api.dart';
 import 'repository.dart';
 
 class FetchAll implements Method<UserModel,List<User>> {
@@ -22,10 +23,37 @@ class TakeByCriteria implements Method<UserModel,List<User>> {
   TakeByCriteria({this.criteria, this.id, this.skip, this.take, this.auth});
 
   @override
-  Future<List<User>> apply(UserModel s) {
-    return s.takeByCriteria(this);
+  Future<List<User>> apply(Executable s) {
+    if(s is UserModel){
+      return s.takeByCriteria(this);
+    } else if( s is UserApi){
+      return s.takeByCriteria(this);
+    } else {
+      return Future.error('cannot apply this state.');
+    }
   }
  }
+
+// class TakeByOptions implements Take<UserModel,List<User>> {
+//   final int id;
+//   final int take;
+//   final int skip;
+//   final User auth;
+//   final Map<String,dynamic> criteria;
+
+//   TakeByOptions({this.criteria, this.id, this.skip, this.take, this.auth});
+
+//   // @override
+//   // Future<List<User>> apply(UserModel s) {
+//   //   return s.takeByCriteria(this);
+//   // }
+
+//   @override
+//   Future<List<User>> takeByCriteria(UserModel s, Map<String, dynamic> options) {
+//     // TODO: implement takeByCriteria
+//     return s.takeByCriteria(this);
+//   }
+//  }
 
 class FetchOne implements Method<UserModel,User> {
   final id;
@@ -100,16 +128,24 @@ class UserModel implements ICache<UserModel, User> {
     return id;
   }
 
-  Future<List<User>> takeByCriteria(TakeByCriteria state) async {
-    print("got list..");
-    return [User(name: "Don", personId: state.id)];
-    // return Future.error("no data");
+  Future<List<User>> takeByCriteria(Method state) async {
+    if(state is TakeByCriteria){
+      print("got list..");
+      return [User(name: "Don", personId: state.id)];
+    } else {
+      return Future.error("no data");
+    }
   }
 
 
 
   @override
   Future<T> exec<T>(Method s) {
+    // if(s is Take){
+    //   return s.takeByCriteria({});
+    // } else {
+    //   return Future.error("cannot execute this method.");
+    // }
     return s.apply(this);
   }
 

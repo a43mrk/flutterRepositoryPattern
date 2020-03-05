@@ -34,7 +34,7 @@ class Repository<T extends IModel,A extends User> {
           try {
             var data = await db.exec<List<T>>(TakeByCriteria(id: id, take: take, skip: skip, criteria: criteria));
             if(data == null || data.length == 0){
-              var resp = await api.exec<List<T>>(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+              var resp = await api.exec<List<T>>(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                 if (resp != null) {
                   for(T item in resp) {
                     item.setSynced();
@@ -58,7 +58,7 @@ class Repository<T extends IModel,A extends User> {
               return [_cacheForPagingByPersonId[auth.personId][id].values.toList()[skip]];
             }
           } catch(onError) {
-              var resp = await api.exec<List<T>>(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+              var resp = await api.exec<List<T>>(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
               if (resp != null) {
                 for(T item in resp) {
                     item.setSynced();
@@ -78,7 +78,7 @@ class Repository<T extends IModel,A extends User> {
           }
     } else {
       if(DateTime.now().difference(_cacheForPagingByPersonId[auth.personId][id].values.last.updated).inSeconds > 30 ){
-            var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+            var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                 if (resp != null) {
                   for(T item in resp) {
                     item.setSynced();
@@ -314,6 +314,11 @@ abstract class Executable {
 
   Future<T> exec<T>(Method s);
 }
+
+// abstract class Take<S,T> implements Method<S,T>{
+//   Future<T> takeByCriteria(S s, Map<String,dynamic> options);
+// }
+
 
 abstract class IModel{
   int id;

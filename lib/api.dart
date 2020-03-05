@@ -82,8 +82,12 @@ class UserApi implements ISource<UserApi, User> {
     return id;
   }
 
-  Future<List<User>> takeByCriteria(TakeByCriteriaApi state) async {
-    return [User(name: "Offf", personId: state.id)];
+  Future<List<User>> takeByCriteria(Method state) async {
+    if(state is TakeByCriteria){
+      return [User(name: "Offf", personId: state.id)];
+    } else {
+      return Future.error('cannot execute this method.');
+    }
   }
 
   @override
