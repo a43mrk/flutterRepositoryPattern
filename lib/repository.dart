@@ -221,7 +221,7 @@ class Repository<T extends IModel,A extends User> {
                       }
                 } else {
                   if(DateTime.now().difference(_cacheForPagingList[auth.personId].values.last.updated).inSeconds > 30 ){
-                                        var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                                        var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                             if (resp != null) {
                               for(T item in resp) {
                                 item.setSynced();

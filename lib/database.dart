@@ -107,13 +107,13 @@ class UserModel implements ICache<UserModel, User> {
     return id;
   }
 
-  Future<List<User>> takeByCriteria(Method state) async {
-    if(state is TakeByCriteria){
-      print("got list..");
-      return [User(name: "Don", personId: state.id)];
-    } else {
+  Future<List<User>> takeByCriteria(TakeByCriteria state) async {
+    // if(state is TakeByCriteria){
+    //   print("got list..");
+      // return [User(name: "Don", personId: state.id)];
+    // } else {
       return Future.error("no data");
-    }
+    // }
   }
 
 

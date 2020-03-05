@@ -21,7 +21,7 @@ class Bloc {
   Future<String> take(int id) async {
     // _repository.api.addAction(GetAll(id));
     // _repository.db.addAction(FetchAll(id));
-    List<User> result = await _repository.take(id: id, auth: User(personId: 21), skip: 0, take: 1);
+    List<User> result = await _repository.takeByCriteria(id: id, auth: User(personId: 21), skip: 0, take: 1);
     return result.first.name.toString();
   }
 }

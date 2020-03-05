@@ -2,20 +2,20 @@
 import 'database.dart';
 import 'repository.dart';
 
-class TakeByCriteriaApi implements Method<UserApi,List<User>> {
-  final int id;
-  final int take;
-  final int skip;
-  final User auth;
-  final Map<String,dynamic> criteria;
+// class TakeByCriteriaApi implements Method<UserApi,List<User>> {
+//   final int id;
+//   final int take;
+//   final int skip;
+//   final User auth;
+//   final Map<String,dynamic> criteria;
 
-  TakeByCriteriaApi({this.criteria, this.id, this.skip, this.take, this.auth});
+//   TakeByCriteriaApi({this.criteria, this.id, this.skip, this.take, this.auth});
 
-  @override
-  Future<List<User>> apply(UserApi s) {
-    return s.takeByCriteria(this);
-  }
- }
+//   @override
+//   Future<List<User>> apply(UserApi s) {
+//     return s.takeByCriteria(this);
+//   }
+//  }
 
 class GetAll implements Method<UserApi,List<User>> {
   final id;
@@ -82,12 +82,12 @@ class UserApi implements ISource<UserApi, User> {
     return id;
   }
 
-  Future<List<User>> takeByCriteria(Method state) async {
-    if(state is TakeByCriteria){
+  Future<List<User>> takeByCriteria(TakeByCriteria state) async {
+    // if(state is TakeByCriteria){
       return [User(name: "Offf", personId: state.id)];
-    } else {
-      return Future.error('cannot execute this method.');
-    }
+    // } else {
+    //   return Future.error('cannot execute this method.');
+    // }
   }
 
   @override
