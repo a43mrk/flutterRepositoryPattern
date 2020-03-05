@@ -7,7 +7,7 @@ import 'database.dart';
 class Repository<T extends IModel,A extends User> {
   final HashMap<int,HashMap<int,HashMap<int,T>>> _cacheForPagingByPersonId = HashMap<int,HashMap<int,HashMap<int,T>>>();
   final HashMap<int,HashMap<int,T>> _cacheForPagingList = HashMap<int,HashMap<int,T>>();
-    final HashMap<int,T> _cache = HashMap<int,T>();
+  final HashMap<int,T> _cache = HashMap<int,T>();
   final ISource api;
   final ICache db;
 
@@ -15,19 +15,19 @@ class Repository<T extends IModel,A extends User> {
 
 
 
-  Future<List<T>> exec<L extends Method, R extends Method>(){
-    if(db == null){
-      for(var a in db.actions){
-        if(a is L) {
-          return db.exec<List<T>>(a);
-        }
-      }
-    } else {
-      for(var a in api.actions){
-        if(a is R) return api.exec<List<T>>(a);
-      }
-    }
-  }
+  // Future<List<T>> exec<L extends Method, R extends Method>(){
+  //   if(db == null){
+  //     for(var a in db.actions){
+  //       if(a is L) {
+  //         return db.exec<List<T>>(a);
+  //       }
+  //     }
+  //   } else {
+  //     for(var a in api.actions){
+  //       if(a is R) return api.exec<List<T>>(a);
+  //     }
+  //   }
+  // }
 
   Future<List<T>> take({int id, int take, int skip, A auth, Map<String, dynamic> criteria }) async {
     if(_cacheForPagingByPersonId[auth.personId] == null || _cacheForPagingByPersonId[auth.personId][id] == null || !(_cacheForPagingByPersonId[auth.personId][id].length < (take + skip))) {
@@ -108,7 +108,7 @@ class Repository<T extends IModel,A extends User> {
                   try {
                     var data = await db.exec<List<T>>(TakeByCriteria(id: id, take: take, skip: skip, criteria: criteria));
                     if(data == null || data.length == 0){
-                      var resp = await api.exec<List<T>>(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                      var resp = await api.exec<List<T>>(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                         if (resp != null) {
                           for(T item in resp) {
                             item.setSynced();
@@ -132,7 +132,7 @@ class Repository<T extends IModel,A extends User> {
                       return [_cacheForPagingByPersonId[auth.personId][id].values.toList()[skip]];
                     }
                   } catch(onError) {
-                      var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                      var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                       if (resp != null) {
                         for(T item in resp) {
                             item.setSynced();
@@ -152,7 +152,7 @@ class Repository<T extends IModel,A extends User> {
                   }
             } else {
               if(DateTime.now().difference(_cacheForPagingByPersonId[auth.personId][id].values.last.updated).inSeconds > 30 ){
-                    var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                    var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                         if (resp != null) {
                           for(T item in resp) {
                             item.setSynced();
@@ -177,7 +177,7 @@ class Repository<T extends IModel,A extends User> {
                       try {
                         var data = await db.exec(TakeByCriteria(id: id, take: take, skip: skip, criteria: criteria));
                         if(data == null || data.length == 0){
-                          var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                          var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                             if (resp != null) {
                               for(T item in resp) {
                                 item.setSynced();
@@ -202,7 +202,7 @@ class Repository<T extends IModel,A extends User> {
                           return [_cacheForPagingList[auth.personId].values.toList()[skip]];
                         }
                       } catch(onError) {
-                          var resp = await api.exec(TakeByCriteriaApi(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
+                          var resp = await api.exec(TakeByCriteria(id: id, take: take, skip: skip, auth: auth, criteria: criteria));
                           if (resp != null) {
                               for(T item in resp) {
                                 item.setSynced();
@@ -331,19 +331,19 @@ abstract class IModel{
 }
 
 abstract class ICache<S,T> implements Executable {
-  final Set<Method> actions;
+  // final Set<Method> actions;
 
-  ICache(this.actions);
+  // ICache(this.actions);
 
-  void addAction(Method action);
+  // void addAction(Method action);
 }
 
 abstract class ISource<S,T> implements Executable {
-  final Set<Method> actions;
+  // final Set<Method> actions;
 
-  ISource(this.actions);
+  // ISource(this.actions);
 
-  void addAction(Method action);
+  // void addAction(Method action);
 }
 
 

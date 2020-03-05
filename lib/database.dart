@@ -34,27 +34,6 @@ class TakeByCriteria implements Method<UserModel,List<User>> {
   }
  }
 
-// class TakeByOptions implements Take<UserModel,List<User>> {
-//   final int id;
-//   final int take;
-//   final int skip;
-//   final User auth;
-//   final Map<String,dynamic> criteria;
-
-//   TakeByOptions({this.criteria, this.id, this.skip, this.take, this.auth});
-
-//   // @override
-//   // Future<List<User>> apply(UserModel s) {
-//   //   return s.takeByCriteria(this);
-//   // }
-
-//   @override
-//   Future<List<User>> takeByCriteria(UserModel s, Map<String, dynamic> options) {
-//     // TODO: implement takeByCriteria
-//     return s.takeByCriteria(this);
-//   }
-//  }
-
 class FetchOne implements Method<UserModel,User> {
   final id;
 
@@ -87,16 +66,16 @@ class Add<T> implements Method<UserModel, int> {
 }
 
 class UserModel implements ICache<UserModel, User> {
-  @override
-  final Set<Method> actions;
+  // @override
+  // final Set<Method> actions;
 
-  UserModel({Set acts}):this.actions = acts != null ? acts : Set<Method>();
+  // UserModel({Set acts}):this.actions = acts != null ? acts : Set<Method>();
 
-  @override
-  void addAction(Method action){
-    print('adding action...');
-    actions.add(action);
-  }
+  // @override
+  // void addAction(Method action){
+  //   print('adding action...');
+  //   actions.add(action);
+  // }
 
   Future<List<User>> selectAll(FetchAll state) async {
     print("selecting everything...");

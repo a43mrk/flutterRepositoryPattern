@@ -51,16 +51,16 @@ class Post<T> implements Method<UserApi, int> {
 }
 
 class UserApi implements ISource<UserApi, User> {
-  @override
-  final Set<Method> actions;
+  // @override
+  // final Set<Method> actions;
 
-  UserApi({Set acts}):this.actions = acts != null ? acts : Set<Method>();
+  // UserApi({Set acts}):this.actions = acts != null ? acts : Set<Method>();
 
-  @override
-  void addAction(Method action){
-    print("posting item");
-    actions.add(action);
-  }
+  // @override
+  // void addAction(Method action){
+  //   print("posting item");
+  //   actions.add(action);
+  // }
 
   Future<List<User>> selectAll(GetAll state) async {
     print("fetching all items...");
